@@ -1,6 +1,4 @@
-﻿#region
-
-global using Atom.Targets;
+﻿global using Atom.Targets;
 global using DecSm.Atom.Build.Definition;
 global using DecSm.Atom.Module.Dotnet;
 global using DecSm.Atom.Module.GithubWorkflows;
@@ -10,5 +8,3 @@ global using DecSm.Atom.Params;
 global using DecSm.Atom.Workflows.Definition;
 global using DecSm.Atom.Workflows.Definition.Options;
 global using DecSm.Atom.Workflows.Definition.Triggers;
-
-#endregion
