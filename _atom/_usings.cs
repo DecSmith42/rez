@@ -1,4 +1,5 @@
 ﻿global using Atom.Targets;
+global using DecSm.Atom;
 global using DecSm.Atom.Build.Definition;
 global using DecSm.Atom.Module.Dotnet;
 global using DecSm.Atom.Module.GithubWorkflows;
