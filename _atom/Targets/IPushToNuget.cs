@@ -13,12 +13,12 @@ internal partial interface IPushToNuget : INugetHelper
         d => d
             .WithDescription("Pushes the Atom projects to Nuget")
             .ConsumesArtifact(Commands.PackRez, IPackRez.RezProjectName)
-            .ConsumesArtifact(Commands.PackRezConfiguration, IPackRez.RezProjectName)
+            .ConsumesArtifact(Commands.PackRezConfiguration, IPackRezConfiguration.RezConfigurationProjectName)
             .RequiresParam(Params.NugetFeed)
             .RequiresParam(Params.NugetApiKey)
             .Executes(async () =>
             {
                 await PushProject(IPackRez.RezProjectName, NugetFeed, NugetApiKey!);
-                await PushProject(IPackRez.RezProjectName, NugetFeed, NugetApiKey!, IPackRez.RezProjectName);
+                await PushProject(IPackRezConfiguration.RezConfigurationProjectName, NugetFeed, NugetApiKey!);
             });
 }
