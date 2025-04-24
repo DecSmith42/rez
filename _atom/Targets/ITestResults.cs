@@ -9,5 +9,13 @@ internal partial interface ITestRez : IDotnetTestHelper
         d => d
             .WithDescription("Runs the DecSm.Rez.UnitTests tests")
             .ProducesArtifact(RezTestProjectName)
-            .Executes(async () => await RunDotnetUnitTests(new(RezTestProjectName)));
+            .Executes(async () =>
+            {
+                var exitCode = 0;
+
+                exitCode += await RunDotnetUnitTests(new(RezTestProjectName));
+
+                if (exitCode != 0)
+                    throw new StepFailedException("One or more unit tests failed");
+            });
 }
