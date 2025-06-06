@@ -2,16 +2,9 @@
 
 [BuildDefinition]
 [GenerateEntryPoint]
-internal partial class Build : DefaultBuildDefinition,
-    IGithubWorkflows,
-    IGitVersion,
-    IPackRez,
-    IPackRezConfiguration,
-    ITestRez,
-    IPushToNuget,
-    IPushToRelease
+internal partial class Build : DefaultBuildDefinition, IGithubWorkflows, IGitVersion, ITargets
 {
-    public override IReadOnlyList<IWorkflowOption> DefaultWorkflowOptions =>
+    public override IReadOnlyList<IWorkflowOption> GlobalWorkflowOptions =>
     [
         UseGitVersionForBuildId.Enabled, new SetupDotnetStep("9.0.x"),
     ];
@@ -23,10 +16,10 @@ internal partial class Build : DefaultBuildDefinition,
             Triggers = [GitPullRequestTrigger.IntoMain, ManualTrigger.Empty],
             StepDefinitions =
             [
-                Commands.SetupBuildInfo,
-                Commands.PackRez.WithSuppressedArtifactPublishing,
-                Commands.PackRezConfiguration.WithSuppressedArtifactPublishing,
-                Commands.TestRez,
+                Targets.SetupBuildInfo,
+                Targets.PackRez.WithSuppressedArtifactPublishing,
+                Targets.PackRezConfiguration.WithSuppressedArtifactPublishing,
+                Targets.TestRez,
             ],
             WorkflowTypes = [Github.WorkflowType],
         },
@@ -35,12 +28,12 @@ internal partial class Build : DefaultBuildDefinition,
             Triggers = [GitPushTrigger.ToMain, GithubReleaseTrigger.OnReleased, ManualTrigger.Empty],
             StepDefinitions =
             [
-                Commands.SetupBuildInfo,
-                Commands.PackRez,
-                Commands.PackRezConfiguration,
-                Commands.TestRez,
-                Commands.PushToNuget.WithAddedOptions(WorkflowSecretInjection.Create(Params.NugetApiKey)),
-                Commands.PushToRelease.WithGithubTokenInjection(),
+                Targets.SetupBuildInfo,
+                Targets.PackRez,
+                Targets.PackRezConfiguration,
+                Targets.TestRez,
+                Targets.PushToNuget.WithOptions(WorkflowSecretInjection.Create(Params.NugetApiKey)),
+                Targets.PushToRelease.WithGithubTokenInjection(),
             ],
             WorkflowTypes = [Github.WorkflowType],
         },
