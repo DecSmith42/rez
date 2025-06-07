@@ -132,6 +132,7 @@ jobs:
   PushToRelease:
     needs: [ PackRez, PackRezConfiguration, SetupBuildInfo ]
     runs-on: ubuntu-latest
+    if: contains(needs.SetupBuildInfo.outputs.build-version, '-') == false
     steps:
       
       - name: Checkout
