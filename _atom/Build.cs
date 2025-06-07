@@ -14,7 +14,7 @@ internal partial class Build : DefaultBuildDefinition, IGithubWorkflows, IGitVer
         new("Validate")
         {
             Triggers = [GitPullRequestTrigger.IntoMain, ManualTrigger.Empty],
-            StepDefinitions =
+            Targets =
             [
                 Targets.SetupBuildInfo,
                 Targets.PackRez.WithSuppressedArtifactPublishing,
@@ -26,7 +26,7 @@ internal partial class Build : DefaultBuildDefinition, IGithubWorkflows, IGitVer
         new("Build")
         {
             Triggers = [GitPushTrigger.ToMain, GithubReleaseTrigger.OnReleased, ManualTrigger.Empty],
-            StepDefinitions =
+            Targets =
             [
                 Targets.SetupBuildInfo,
                 Targets.PackRez,
