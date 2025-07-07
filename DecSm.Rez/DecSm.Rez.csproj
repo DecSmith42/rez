@@ -11,7 +11,7 @@
 
   <!--  Dotnet Standard 2.0 Packages-->
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="Polyfill" Version="7.33.0">
+    <PackageReference Include="Polyfill" Version="8.4.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
