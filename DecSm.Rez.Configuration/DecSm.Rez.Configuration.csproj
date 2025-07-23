@@ -6,7 +6,7 @@
 
   <!--  Packages-->
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2024.3.0"/>
+    <PackageReference Include="JetBrains.Annotations" Version="2024.3.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.6" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.6" />
   </ItemGroup>
@@ -34,9 +34,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-  
+
   <ItemGroup>
-    <ProjectReference Include="..\DecSm.Rez\DecSm.Rez.csproj"/>
+    <ProjectReference Include="..\DecSm.Rez\DecSm.Rez.csproj" />
   </ItemGroup>
 
 </Project>
