@@ -45,9 +45,21 @@ public sealed class ResolverSource : IResolverSource
         _functions = functions.ToDictionary(x => x.Key, x => x.Value);
     }
 
-    public string? ResolveVariable(string name) =>
-        _variables.GetValueOrDefault(name);
+    public string? ResolveVariable(string name)
+    {
+        #if NET8_0_OR_GREATER
+        return _variables.GetValueOrDefault(name);
+        #else
+        return _variables!.GetValueOrDefault(name);
+        #endif
+    }
 
-    public Func<FunctionCall, string>? ResolveFunction(string name) =>
-        _functions.GetValueOrDefault(name);
+    public Func<FunctionCall, string>? ResolveFunction(string name)
+    {
+        #if NET8_0_OR_GREATER
+        return _functions.GetValueOrDefault(name);
+        #else
+        return _functions!.GetValueOrDefault(name);
+        #endif
+    }
 }

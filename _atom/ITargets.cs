@@ -1,4 +1,4 @@
-namespace Atom.Targets;
+namespace Atom;
 
 [PublicAPI]
 internal interface ITargets : IDotnetPackHelper, IDotnetTestHelper, INugetHelper, IGithubReleaseHelper, ISetupBuildInfo
