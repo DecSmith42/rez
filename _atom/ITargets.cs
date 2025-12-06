@@ -5,7 +5,7 @@ internal interface ITargets : IDotnetPackHelper, IDotnetTestHelper, INugetHelper
 {
     const string RezProjectName = "DecSm.Rez";
     const string RezConfigurationProjectName = "DecSm.Rez.Configuration";
-    const string RezTestProjectName = "DecSm.Rez.UnitTests";
+    const string RezTestProjectName = "DecSm.Rez.Tests";
 
     [ParamDefinition("nuget-push-feed", "The Nuget feed to push to.", "https://api.nuget.org/v3/index.json")]
     string NugetFeed => GetParam(() => NugetFeed, "https://api.nuget.org/v3/index.json");
@@ -27,7 +27,7 @@ internal interface ITargets : IDotnetPackHelper, IDotnetTestHelper, INugetHelper
 
     Target TestRez =>
         d => d
-            .DescribedAs("Runs the DecSm.Rez.UnitTests tests")
+            .DescribedAs("Runs the DecSm.Rez.Tests tests")
             .ProducesArtifact(RezTestProjectName)
             .Executes(async () =>
             {

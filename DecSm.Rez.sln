@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DecSm.Rez.Configuration", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_atom", "_atom\_atom.csproj", "{24AC005C-BA33-446B-AEC8-FE3316E690E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DecSm.Rez.UnitTests", "DecSm.Rez.UnitTests\DecSm.Rez.UnitTests.csproj", "{36B970B7-BF7B-4CB7-B2BC-310CA38913AF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DecSm.Rez.Tests", "DecSm.Rez.Tests\DecSm.Rez.Tests.csproj", "{36B970B7-BF7B-4CB7-B2BC-310CA38913AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

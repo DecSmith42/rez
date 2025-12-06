@@ -1,4 +1,4 @@
-﻿namespace DecSm.Rez.UnitTests.Implementation;
+﻿namespace DecSm.Rez.Tests.Implementation;
 
 [TestFixture]
 public class RezzerTests
