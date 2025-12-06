@@ -4,7 +4,7 @@ namespace DecSm.Rez.Configuration;
 [PublicAPI]
 public interface IResolvableConfig : IConfigurationRoot
 {
-    public IResolver Resolver { get; }
+    IResolver Resolver { get; }
 
-    public string? Resolve(string? value);
+    string? Resolve(string? value);
 }

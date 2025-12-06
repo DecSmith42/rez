@@ -111,7 +111,8 @@ public class RezzerTests
                     : string.Empty),
         }));
 
-        var result = resolver.Resolve("prefix_{functionName1(correctParam)}_middle_{functionName2(correctParam)}_postfix");
+        var result =
+            resolver.Resolve("prefix_{functionName1(correctParam)}_middle_{functionName2(correctParam)}_postfix");
 
         result.ShouldBe("prefix_value1_middle_value2_postfix");
     }
@@ -188,7 +189,8 @@ public class RezzerTests
     {
         var resolver = new Resolver();
 
-        resolver.AddSource(new ResolverSource([new("variableName1", "{variableName2}"), new("variableName2", "correctParam")],
+        resolver.AddSource(new ResolverSource(
+            [new("variableName1", "{variableName2}"), new("variableName2", "correctParam")],
             new List<KeyValuePair<string, Func<FunctionCall, string>>>
             {
                 new("functionName",

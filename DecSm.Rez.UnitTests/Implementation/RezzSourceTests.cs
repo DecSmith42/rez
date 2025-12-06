@@ -22,7 +22,8 @@ public class RezzSourceTests
 
         Should.Throw<Exception>(() => new ResolverSource((IEnumerable<KeyValuePair<string, string>>)null!));
 
-        Should.Throw<Exception>(() => new ResolverSource((IEnumerable<KeyValuePair<string, Func<FunctionCall, string>>>)null!));
+        Should.Throw<Exception>(() =>
+            new ResolverSource((IEnumerable<KeyValuePair<string, Func<FunctionCall, string>>>)null!));
     }
 
     [Test]

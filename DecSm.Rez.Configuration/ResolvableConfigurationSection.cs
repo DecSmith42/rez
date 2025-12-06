@@ -2,7 +2,8 @@ namespace DecSm.Rez.Configuration;
 
 /// <inheritdoc />
 [UsedImplicitly]
-internal sealed class ResolvableConfigurationSection(IConfigurationSection target, IResolver resolver) : IConfigurationSection
+internal sealed class ResolvableConfigurationSection(IConfigurationSection target, IResolver resolver)
+    : IConfigurationSection
 {
     public IConfigurationSection GetSection(string key) =>
         new ResolvableConfigurationSection(target.GetSection(key), resolver);

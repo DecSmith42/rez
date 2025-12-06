@@ -25,7 +25,10 @@ public class RendererTests
     {
         const string inputText = "literalliteralliteral";
 
-        Span<SyntaxToken> tokens = [SyntaxToken.CreateLiteral(0, 7), SyntaxToken.CreateLiteral(7, 7), SyntaxToken.CreateLiteral(14, 7)];
+        Span<SyntaxToken> tokens =
+        [
+            SyntaxToken.CreateLiteral(0, 7), SyntaxToken.CreateLiteral(7, 7), SyntaxToken.CreateLiteral(14, 7),
+        ];
 
         Span<char> outputText = stackalloc char[inputText.Length * 3];
         var resolution = new Func<string, string>(_ => "resolved");
