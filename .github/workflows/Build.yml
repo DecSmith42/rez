@@ -161,7 +161,55 @@ jobs:
       - name: Download DecSm.Rez.Tests
         uses: actions/download-artifact@v4
         with:
-          name: DecSm.Rez.Tests
+          name: DecSm.Rez.Tests-windows-latest-net8.0
+          path: "${{ github.workspace }}/.github/artifacts/DecSm.Rez.Tests"
+      
+      - name: Download DecSm.Rez.Tests
+        uses: actions/download-artifact@v4
+        with:
+          name: DecSm.Rez.Tests-windows-latest-net9.0
+          path: "${{ github.workspace }}/.github/artifacts/DecSm.Rez.Tests"
+      
+      - name: Download DecSm.Rez.Tests
+        uses: actions/download-artifact@v4
+        with:
+          name: DecSm.Rez.Tests-windows-latest-net10.0
+          path: "${{ github.workspace }}/.github/artifacts/DecSm.Rez.Tests"
+      
+      - name: Download DecSm.Rez.Tests
+        uses: actions/download-artifact@v4
+        with:
+          name: DecSm.Rez.Tests-ubuntu-latest-net8.0
+          path: "${{ github.workspace }}/.github/artifacts/DecSm.Rez.Tests"
+      
+      - name: Download DecSm.Rez.Tests
+        uses: actions/download-artifact@v4
+        with:
+          name: DecSm.Rez.Tests-ubuntu-latest-net9.0
+          path: "${{ github.workspace }}/.github/artifacts/DecSm.Rez.Tests"
+      
+      - name: Download DecSm.Rez.Tests
+        uses: actions/download-artifact@v4
+        with:
+          name: DecSm.Rez.Tests-ubuntu-latest-net10.0
+          path: "${{ github.workspace }}/.github/artifacts/DecSm.Rez.Tests"
+      
+      - name: Download DecSm.Rez.Tests
+        uses: actions/download-artifact@v4
+        with:
+          name: DecSm.Rez.Tests-macos-latest-net8.0
+          path: "${{ github.workspace }}/.github/artifacts/DecSm.Rez.Tests"
+      
+      - name: Download DecSm.Rez.Tests
+        uses: actions/download-artifact@v4
+        with:
+          name: DecSm.Rez.Tests-macos-latest-net9.0
+          path: "${{ github.workspace }}/.github/artifacts/DecSm.Rez.Tests"
+      
+      - name: Download DecSm.Rez.Tests
+        uses: actions/download-artifact@v4
+        with:
+          name: DecSm.Rez.Tests-macos-latest-net10.0
           path: "${{ github.workspace }}/.github/artifacts/DecSm.Rez.Tests"
       
       - name: PushToRelease
