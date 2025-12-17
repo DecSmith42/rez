@@ -68,7 +68,9 @@ public class RezzerTests
 
         resolver.AddSource(new ResolverSource(new KeyValuePair<string, string>[]
         {
-            new("variableName1", "variableName2"), new("variableName2", "variableName3"), new("variableName3", "value"),
+            new("variableName1", "variableName2"),
+            new("variableName2", "variableName3"),
+            new("variableName3", "value"),
         }));
 
         var result = resolver.Resolve("prefix_{{{variableName1}}}_postfix");
