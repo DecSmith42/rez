@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="DecSm.Rez.Configuration/DecSm.Rez.Configuration.csproj" />
+  <Project Path="DecSm.Rez.Tests/DecSm.Rez.Tests.csproj" />
+  <Project Path="DecSm.Rez/DecSm.Rez.csproj" />
+  <Project Path="_atom/_atom.csproj" />
+</Solution>

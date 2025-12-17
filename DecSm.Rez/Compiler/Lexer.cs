@@ -20,6 +20,7 @@ internal static class Lexer
 
                     continue;
                 }
+
                 case '{' when !escaped:
                 {
                     if (workingIndex > checkpointIndex)
@@ -31,6 +32,7 @@ internal static class Lexer
 
                     continue;
                 }
+
                 case '}' when !escaped:
                 {
                     if (workingIndex > checkpointIndex)
@@ -42,6 +44,7 @@ internal static class Lexer
 
                     continue;
                 }
+
                 default:
                 {
                     escaped = false;

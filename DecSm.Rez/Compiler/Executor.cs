@@ -48,7 +48,10 @@ internal static class Executor
             var lexemeLength = Lexer.Lex(sourceBuffer[..inputLength], lexemeBuffer);
             var tokenLength = Tokenizer.TokenizeLexemes(lexemeBuffer[..lexemeLength], tokenBuffer);
 
-            outputLength = Renderer.Render(tokenBuffer[..tokenLength], sourceBuffer[..inputLength], destBuffer, resolution);
+            outputLength = Renderer.Render(tokenBuffer[..tokenLength],
+                sourceBuffer[..inputLength],
+                destBuffer,
+                resolution);
 
             swapBuffer = !swapBuffer;
 

@@ -6,4 +6,4 @@ global using DecSm.Rez.Compiler.Model;
 global using JetBrains.Annotations;
 global using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("DecSm.Rez.UnitTests")]
+[assembly: InternalsVisibleTo("DecSm.Rez.Tests")]

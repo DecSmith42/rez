@@ -1,4 +1,4 @@
-﻿namespace DecSm.Rez.UnitTests.Compiler;
+﻿namespace DecSm.Rez.Tests.Compiler;
 
 [TestFixture]
 [SuppressMessage("ReSharper", "ConvertToLocalFunction")]

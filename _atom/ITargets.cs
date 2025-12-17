@@ -1,39 +1,48 @@
-namespace Atom;
+﻿namespace Atom;
 
-[PublicAPI]
 internal interface ITargets : IDotnetPackHelper, IDotnetTestHelper, INugetHelper, IGithubReleaseHelper, ISetupBuildInfo
 {
-    const string RezProjectName = "DecSm.Rez";
-    const string RezConfigurationProjectName = "DecSm.Rez.Configuration";
-    const string RezTestProjectName = "DecSm.Rez.UnitTests";
+    static readonly string[] ProjectsToPack = [Projects.DecSm_Rez.Name, Projects.DecSm_Rez_Configuration.Name];
+    static readonly string[] ProjectsToTest = [Projects.DecSm_Rez_Tests.Name];
 
-    [ParamDefinition("nuget-push-feed", "The Nuget feed to push to.", "https://api.nuget.org/v3/index.json")]
+    [ParamDefinition("test-framework", "Test framework to use for unit tests")]
+    string TestFramework => GetParam(() => TestFramework, "net10.0");
+
+    [ParamDefinition("nuget-push-feed", "The Nuget feed to push to.")]
     string NugetFeed => GetParam(() => NugetFeed, "https://api.nuget.org/v3/index.json");
 
     [SecretDefinition("nuget-push-api-key", "The API key to use to push to Nuget.")]
     string? NugetApiKey => GetParam(() => NugetApiKey);
 
-    Target PackRez =>
-        d => d
-            .DescribedAs("Builds the DecSm.Rez project into a NuGet package")
-            .ProducesArtifact(RezProjectName)
-            .Executes(async () => await DotnetPackProject(new(RezProjectName)));
+    Target Pack =>
+        t => t
+            .DescribedAs("Packs NuGet packages")
+            .ProducesArtifacts(ProjectsToPack)
+            .Executes(async cancellationToken =>
+            {
+                foreach (var projectName in ProjectsToPack)
+                    await DotnetPackAndStage(projectName, cancellationToken: cancellationToken);
+            });
 
-    Target PackRezConfiguration =>
+    Target Test =>
         d => d
-            .DescribedAs("Builds the DecSm.Rez.Configuration project into a NuGet package")
-            .ProducesArtifact(RezConfigurationProjectName)
-            .Executes(async () => await DotnetPackProject(new(RezConfigurationProjectName)));
-
-    Target TestRez =>
-        d => d
-            .DescribedAs("Runs the DecSm.Rez.UnitTests tests")
-            .ProducesArtifact(RezTestProjectName)
-            .Executes(async () =>
+            .DescribedAs("Runs all unit tests")
+            .RequiresParam(nameof(TestFramework))
+            .ProducesArtifacts(ProjectsToTest)
+            .Executes(async cancellationToken =>
             {
                 var exitCode = 0;
 
-                exitCode += await RunDotnetUnitTests(new(RezTestProjectName));
+                foreach (var projectName in ProjectsToTest)
+                    exitCode += await DotnetTestAndStage(projectName,
+                        new()
+                        {
+                            TestOptions = new()
+                            {
+                                Framework = TestFramework,
+                            },
+                        },
+                        cancellationToken);
 
                 if (exitCode != 0)
                     throw new StepFailedException("One or more unit tests failed");
@@ -41,35 +50,29 @@ internal interface ITargets : IDotnetPackHelper, IDotnetTestHelper, INugetHelper
 
     Target PushToNuget =>
         d => d
-            .DescribedAs("Pushes the Atom projects to Nuget")
-            .RequiresParam(nameof(NugetFeed))
-            .RequiresParam(nameof(NugetApiKey))
-            .ConsumesArtifact(nameof(PackRez), RezProjectName)
-            .ConsumesArtifact(nameof(PackRezConfiguration), RezConfigurationProjectName)
-            .Executes(async () =>
+            .DescribedAs("Pushes packages to Nuget")
+            .RequiresParam(nameof(NugetFeed), nameof(NugetApiKey))
+            .ConsumesArtifacts(nameof(Pack), ProjectsToPack)
+            .DependsOn(nameof(Test))
+            .Executes(async cancellationToken =>
             {
-                await PushProject(RezProjectName, NugetFeed, NugetApiKey!);
-                await PushProject(RezConfigurationProjectName, NugetFeed, NugetApiKey!);
+                foreach (var projectName in ProjectsToPack)
+                    await PushProject(projectName, NugetFeed, NugetApiKey!, cancellationToken: cancellationToken);
             });
 
     Target PushToRelease =>
         d => d
-            .DescribedAs("Pushes the package to the release feed.")
+            .DescribedAs("Pushes artifacts to a GitHub release")
             .RequiresParam(nameof(GithubToken))
             .ConsumesVariable(nameof(SetupBuildInfo), nameof(BuildVersion))
-            .ConsumesArtifact(nameof(PackRez), RezProjectName)
-            .ConsumesArtifact(nameof(PackRezConfiguration), RezConfigurationProjectName)
+            .RequiresParam(nameof(NugetFeed), nameof(NugetApiKey))
+            .ConsumesArtifacts(nameof(Pack), ProjectsToPack)
+            .ConsumesArtifacts(nameof(Test),
+                ProjectsToTest,
+                PlatformNames.SelectMany(platform => FrameworkNames.Select(framework => $"{platform}-{framework}")))
             .Executes(async () =>
             {
-                if (BuildVersion.IsPreRelease)
-                {
-                    Logger.LogInformation("Skipping release push for pre-release version");
-
-                    return;
-                }
-
-                var releaseTag = $"v{BuildVersion}";
-                await UploadArtifactToRelease(RezProjectName, releaseTag);
-                await UploadArtifactToRelease(RezConfigurationProjectName, releaseTag);
+                foreach (var projectName in ProjectsToPack.Concat(ProjectsToTest))
+                    await UploadArtifactToRelease(projectName, $"v{BuildVersion}");
             });
 }

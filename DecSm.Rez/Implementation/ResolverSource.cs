@@ -7,7 +7,9 @@ public sealed class ResolverSource : IResolverSource
     private readonly Dictionary<string, Func<FunctionCall, string>> _functions;
     private readonly Dictionary<string, string> _variables;
 
-    public ResolverSource(Dictionary<string, string> variables, Dictionary<string, Func<FunctionCall, string>> functions)
+    public ResolverSource(
+        Dictionary<string, string> variables,
+        Dictionary<string, Func<FunctionCall, string>> functions)
     {
         _variables = variables ?? throw new ArgumentNullException(nameof(variables));
         _functions = functions ?? throw new ArgumentNullException(nameof(functions));
